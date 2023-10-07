@@ -1,14 +1,14 @@
 <?php
-class ClaseAReemplazar
+class Persona
 {
 
     public static function BuscarTodas()
     {
         $con  = Database::getInstance();
-        $sql = "select * from [tablaAReemplazar]";
+        $sql = "select * from personas";
         $queryClaseAReemplazar = $con->db->prepare($sql);
         $queryClaseAReemplazar->execute();
-        $queryClaseAReemplazar->setFetchMode(PDO::FETCH_CLASS, '[ClaseAReemplazar]');
+        $queryClaseAReemplazar->setFetchMode(PDO::FETCH_CLASS, 'Persona');
 
         $claseAReemplazarADevolver = array();
 
@@ -22,11 +22,11 @@ class ClaseAReemplazar
     public static function Buscar($id)
     {
         $con  = Database::getInstance();
-        $sql = "select * from [tablaAReemplazar] where Id = :p1";
+        $sql = "select * from personas where Id = :p1";
         $queryClaseAReemplazar = $con->db->prepare($sql);
         $params = array("p1" => $id);
         $queryClaseAReemplazar->execute($params);
-        $queryClaseAReemplazar->setFetchMode(PDO::FETCH_CLASS, '[ClaseAReemplazar]');
+        $queryClaseAReemplazar->setFetchMode(PDO::FETCH_CLASS, 'Persona');
         foreach ($queryClaseAReemplazar as $m) {
             return $m;
         }
@@ -35,13 +35,13 @@ class ClaseAReemplazar
     public function Agregar()
     {
         $con  = Database::getInstance();
-        $sql = "insert into [tablaAReemplazar] ([propiedad1],[propiedad2]) values (:p1,:p2)";
+        $sql = "insert into personas (Nombre, Apellido, NroDocumento, Direccion, Email) values (:p1,:p2, :p3, :p4, :p5)";
         $claseAReemplazar = $con->db->prepare($sql);
-        $params = array("p1" => $this->propiedad1, "p2" => $this->propiedad2);
+        $params = array("p1" => $this->Nombre, "p2" => $this->Apellido,"p3" => $this->NroDocumento, "p4" => $this->Direccion, "p5" => $this->Email);
         $claseAReemplazar->execute($params);
     }
 
-    public function Modificar()
+    /* public function Modificar()
     {
         $con = Database::getInstance();
         $sql = "UPDATE [tablaAReemplazar]
@@ -61,5 +61,5 @@ class ClaseAReemplazar
         $claseAReemplazar = $con->db->prepare($sql);
         $params = array("p1" => $this->Id);
         $claseAReemplazar->execute($params);
-    }
+    } */
 }
